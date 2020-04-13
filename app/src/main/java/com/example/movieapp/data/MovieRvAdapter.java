@@ -1,14 +1,12 @@
 package com.example.movieapp.data;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.movieapp.DetailActivity;
 import com.example.movieapp.R;
 import com.squareup.picasso.Picasso;
-
-import static android.os.Build.VERSION_CODES.O;
 
 public class MovieRvAdapter extends RecyclerView.Adapter<MovieRvAdapter.ViewHolder> {
     public static final String KEY_MOVIE = "movie";
@@ -69,10 +65,9 @@ public class MovieRvAdapter extends RecyclerView.Adapter<MovieRvAdapter.ViewHold
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView mImageView;
-        TextView tv;
+       final ImageView mImageView;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);

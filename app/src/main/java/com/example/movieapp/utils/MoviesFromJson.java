@@ -1,6 +1,5 @@
 package com.example.movieapp.utils;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.example.movieapp.data.Movie;
@@ -22,7 +21,7 @@ public final class MoviesFromJson {
     private static final String BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500/";
 
 
-    public static Movie[] getMoviesFromJson (Context context, String jsonString) {
+    public static Movie[] getMoviesFromJson(String jsonString) {
 
 
 

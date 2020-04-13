@@ -2,7 +2,6 @@ package com.example.movieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -21,13 +20,8 @@ import com.example.movieapp.data.MovieRvAdapter;
 import com.example.movieapp.utils.MoviesFromJson;
 import com.example.movieapp.utils.NetworkUtils;
 
-import org.json.JSONException;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,14 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private TextView mErrorMessageTv;
     private ProgressBar mProgressBar;
-    private Movie[] movieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mErrorMessageTv = findViewById(R.id.error_message_tv);
-        mRecyclerView = findViewById(R.id.rv_movie_cataloge);
+        mRecyclerView = findViewById(R.id.rv_movie_catalog);
         mProgressBar = findViewById(R.id.progress_bar);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false);
@@ -68,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public class FetchMoviesTask extends AsyncTask<String, Void, Movie[]> {
+    class FetchMoviesTask extends AsyncTask<String, Void, Movie[]> {
 
         @Override
         protected Movie[] doInBackground(String... strings) {
@@ -80,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 String jsonMovieResponse = NetworkUtils.httpUrlConnection(movieRequest);
 
-                Movie[] movies = MoviesFromJson.getMoviesFromJson(MainActivity.this, jsonMovieResponse);
+                Movie[] movies = MoviesFromJson.getMoviesFromJson(jsonMovieResponse);
 
                 assert movies != null;
                 Log.v(TAG, movies[3].getmMovieDescription());
@@ -106,21 +99,20 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(movies);
             mProgressBar.setVisibility(View.INVISIBLE);
             if (movies != null) {
-                movieList = movies;
-                mMovieAdapter.setMovieData(movieList);
+                mMovieAdapter.setMovieData(movies);
             }
             else showErrorMessage();
         }
     }
 
-    public void loadMovieData(String sort) {
+    private void loadMovieData(String sort) {
 
         showMovieCatalog();
 
         new FetchMoviesTask().execute(sort);
     }
 
-    public void showMovieCatalog() {
+    private void showMovieCatalog() {
         mErrorMessageTv.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
